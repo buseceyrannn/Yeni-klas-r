@@ -1,0 +1,109 @@
+﻿@model IEnumerable<BUSEB.Models.Product>
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<div class="card-custom" style="background-color: #1a1924; padding: 25px; border-radius: 8px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="m-0 text-white fw-bold" style="font-size: 28px;">Ürünler</h2>
+
+        <form method="get" action="@Url.Action("Index", "Product")" class="d-flex" style="max-width: 300px;">
+            <input type="text" name="aramaKelimesi" class="form-control bg-dark text-white border-secondary me-2" placeholder="Ürün adı ara..." style="border-radius: 6px;" />
+            <button type="submit" class="btn btn-primary px-4" style="background-color: #5046e5; border: none; border-radius: 6px;">
+                Ara
+            </button>
+        </form>
+    </div>
+
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.Identity.Name == "admin@buseb.com"))
+    {
+        <div class="mb-3">
+            <a href="@Url.Action("Create", "Product")"
+               class="btn btn-success px-3 py-2 fw-semibold"
+               style="background-color: #198754; border: none; border-radius: 6px;">
+                Yeni Ürün Ekle
+            </a>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle m-0 text-white">
+            <thead>
+                <tr style="border-bottom: 2px solid #2d2b3d;">
+                    <th style="width: 80px; color: #a0aec0;">Id</th>
+                    <th style="color: #a0aec0;">Ürün Adı</th>
+                    <th style="color: #a0aec0;">Fiyat</th>
+                    <th style="color: #a0aec0;">Stok</th>
+                    <th style="width: 300px; text-align: center; color: #a0aec0;">İşlemler</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr style="border-bottom: 1px solid #2d2b3d;">
+
+                            <td class="fw-bold" style="color: #718096;">
+                                @item.Id
+                            </td>
+
+                            <td class="fw-semibold">
+                                @item.Name
+                            </td>
+
+                            <td>
+                                ₺@string.Format("{0:N2}", item.Price)
+                            </td>
+
+                            <td>
+                                <span class="badge px-2 py-1"
+                                      style="background-color: rgba(25, 135, 84, 0.2);
+                                    color: #25c274;
+                                    border: 1px solid rgba(25, 135, 84, 0.3);">
+                                    @item.Stock Adet
+                                </span>
+                            </td>
+
+                            <td style="text-align:center;">
+
+                                @if (User.Identity.IsAuthenticated &&
+                               (User.IsInRole("Admin") ||
+                               User.Identity.Name == "admin@buseb.com"))
+                                {
+                                    <a href="@Url.Action("Edit", "Product", new { id = item.Id })"
+                                       class="btn btn-warning btn-sm text-dark fw-bold me-2">
+                                        Düzenle
+                                    </a>
+
+                                    <a href="@Url.Action("Delete", "Product", new { id = item.Id })"
+                                       class="btn btn-danger btn-sm text-white fw-bold me-2">
+                                        Sil
+                                    </a>
+                                }
+
+                                <a href="@Url.Action("AddToCart", "Cart", new { id = item.Id })"
+                                   class="btn btn-success btn-sm text-white fw-bold">
+                                    Sepete Ekle
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5"
+                            class="text-center text-muted py-4">
+                            Listelenecek ürün bulunamadı.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

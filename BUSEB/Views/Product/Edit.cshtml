@@ -1,0 +1,77 @@
+﻿@model BUSEB.Models.Product
+
+<h2>Ürün Güncelle</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label>Ürün Adı</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Fiyat</label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Stok</label>
+        <input asp-for="Stock" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Kategori</label>
+
+        <select asp-for="CategoryId" class="form-control">
+
+            @if (ViewBag.Categories != null)
+            {
+                foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item.Id"
+                            selected="@(item.Id == Model.CategoryId)">
+                        @item.Name
+                    </option>
+                }
+            }
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+
+        <label>Mevcut Görsel</label>
+
+        <br />
+
+        @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+        {
+            <img src="@Model.ImageUrl"
+                 width="120"
+                 height="120"
+                 style="object-fit:cover;" />
+        }
+        else
+        {
+            <p>Görsel bulunamadı.</p>
+        }
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Yeni Görsel Yükle</label>
+
+        <input type="file"
+               name="imageFile"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit" class="btn btn-warning">
+        Güncelle
+    </button>
+
+</form>

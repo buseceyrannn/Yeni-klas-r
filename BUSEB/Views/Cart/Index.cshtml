@@ -1,0 +1,94 @@
+﻿@model List<BUSEB.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Sepetim";
+}
+
+<div class="card-custom p-4">
+
+    <h2 class="mb-4 text-white">
+        🛒 Sepetim
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            Sepetiniz boş.
+        </div>
+    }
+    else
+    {
+        <table class="table table-dark table-striped">
+
+            <thead>
+                <tr>
+                    <th>Görsel</th>
+                    <th>Ürün</th>
+                    <th>Fiyat</th>
+                    <th>Adet</th>
+                    <th>Toplam</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <img src="@item.ImageUrl"
+                                 width="60"
+                                 height="60"
+                                 style="object-fit:cover;" />
+                        </td>
+
+                        <td>
+                            @item.ProductName
+                        </td>
+
+                        <td>
+                            ₺@item.Price
+                        </td>
+
+                        <td>
+                            @item.Quantity
+                        </td>
+
+                        <td>
+                            ₺@(item.Price * item.Quantity)
+                        </td>
+
+                        <td>
+
+                            <a asp-controller="Cart"
+                               asp-action="Remove"
+                               asp-route-id="@item.ProductId"
+                               class="btn btn-danger btn-sm">
+
+                                Sil
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        <h4 class="text-end text-success">
+
+            Toplam:
+            ₺@Model.Sum(x => x.Price * x.Quantity)
+
+        </h4>
+    }
+
+
+</a><a href="/Cart/Checkout" class="btn btn-primary">
+Siparişi Tamamla
+</a>

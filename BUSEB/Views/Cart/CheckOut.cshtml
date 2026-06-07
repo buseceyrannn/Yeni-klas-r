@@ -1,0 +1,41 @@
+﻿@model BUSEB.Models.CheckoutViewModel
+
+<h2>Sipariş Tamamlama</h2>
+
+<form method="post">
+
+    <div>
+        <label>Adres</label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+
+    <div>
+        <label>Telefon</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div>
+        <label>Kart Üzerindeki İsim</label>
+        <input asp-for="CardName" class="form-control" />
+    </div>
+
+    <div>
+        <label>Kart Numarası</label>
+        <input asp-for="CardNumber" class="form-control" />
+    </div>
+
+    <div>
+        <label>Son Kullanma</label>
+        <input asp-for="Expiry" class="form-control" />
+    </div>
+
+    <div>
+        <label>CVV</label>
+        <input asp-for="CVV" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">
+        Siparişi Tamamla
+    </button>
+
+</form>

@@ -1,0 +1,19 @@
+﻿@model List<BUSEB.Models.Order>
+
+<h2>Siparişlerim</h2>
+
+@if (!Model.Any())
+{
+    <p>Henüz sipariş yok.</p>
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            <p><b>Sipariş ID:</b> @item.Id</p>
+            <p><b>Tarih:</b> @item.CreatedAt</p>
+            <p><b>Toplam:</b> @item.TotalPrice ₺</p>
+        </div>
+    }
+}
